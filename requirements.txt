@@ -1,5 +1,3 @@
 streamlit
-random
-os
 PIL
 streamlit_drawable_canvas
