@@ -57,24 +57,22 @@ if st.button("作品を保存"):
         # 保存した作品の情報を表示
         if 'gallery' not in st.session_state:
             st.session_state.gallery = []
-        st.session_state.gallery.append((filename, author_name))  # author_nameはここで必要
+        st.session_state.gallery.append(filename)  # ファイル名のみを保存
 
 # ギャラリー表示
 st.write("保存された作品:")
 if 'gallery' in st.session_state:
-    for filename, author in st.session_state.gallery:
+    for filename in st.session_state.gallery:
         col1, col2 = st.columns([4, 1])  # 2つのカラムを作成
         with col1:
-            st.image(filename, caption=f"作品: {author}", use_container_width=True)
+            st.image(filename, caption=f"作品: {filename}", use_container_width=True)  # ファイル名を表示
         with col2:
             if st.button("削除", key=filename):  # 各作品に削除ボタンを追加
                 os.remove(filename)  # ファイルを削除
-                st.session_state.gallery.remove((filename, author))  # ギャラリーから削除
-                st.success(f"{author}の作品が削除されました。")
+                st.session_state.gallery.remove(filename)  # ギャラリーから削除
+                st.success(f"{filename}が削除されました。")
 
-# アプリ起動時にギャラリーを初期化
-if 'gallery' not in st.session_state:
-    st.session_state.gallery = []
+
 
 # 拡張案: 作品を他のユーザーと共有できる掲示板機能
 # ここに掲示板機能のコードを追加できます
