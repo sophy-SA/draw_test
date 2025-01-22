@@ -47,17 +47,17 @@ author_name = st.text_input("作者名を入力してください:")
 
 # 作品を保存する機能
 if st.button("作品を保存"):
-    if canvas_result.image_data is not None and author_name:
+    if canvas_result.image_data is not None:
         # 画像を保存
+        filename = f"drawing_{author_name}_{len(os.listdir())}.png"  # 作者名をファイル名に含める
         image = Image.fromarray(canvas_result.image_data)
-        filename = f"drawing_{len(os.listdir())}.png"  # ファイル名をユニークにする
         image.save(filename)
         st.success(f"作品が保存されました！ ({author_name})")
         
         # 保存した作品の情報を表示
         if 'gallery' not in st.session_state:
             st.session_state.gallery = []
-        st.session_state.gallery.append((filename, author_name))
+        st.session_state.gallery.append((filename, author_name))  # author_nameはここで必要
 
 # ギャラリー表示
 st.write("保存された作品:")
