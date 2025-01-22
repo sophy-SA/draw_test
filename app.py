@@ -8,7 +8,7 @@ from streamlit_drawable_canvas import st_canvas
 topics = ["猫", "ファンタジーの生き物", "未来の乗り物", "風景", "絶対勝てないボスキャラ","理想の家","好きな食べ物","宇宙","かわいいロボット","犬","つねちゃんの似顔絵","お伽話から1シーン","自由にどうぞ！(当たり)","さむらい"]
 
 # アプリのタイトル
-st.title("お絵かきチャレンジ2")
+st.title("お絵かきチャレンジ1")
 
 # ランダムお題生成
 if st.button("お題を生成"):
@@ -71,6 +71,10 @@ if 'gallery' in st.session_state:
                 os.remove(filename)  # ファイルを削除
                 st.session_state.gallery.remove((filename, author))  # ギャラリーから削除
                 st.success(f"{author}の作品が削除されました。")
+
+# アプリ起動時にギャラリーを初期化
+if 'gallery' not in st.session_state:
+    st.session_state.gallery = []
 
 # 拡張案: 作品を他のユーザーと共有できる掲示板機能
 # ここに掲示板機能のコードを追加できます
