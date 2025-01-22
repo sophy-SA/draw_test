@@ -1,5 +1,5 @@
 streamlit
 random
 os
-PIL
-streamlit_drawable_canvas
+image
+st_canvas
