@@ -1,7 +1,0 @@
-streamlit
-random
-os
-PIL
-image
-streamlit_drawable_canvas
-st_canvas
