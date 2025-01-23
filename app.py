@@ -46,12 +46,17 @@ canvas_result = st_canvas(
 author_name = st.text_input("作者名を入力してください:")
 
 # 作品を保存する機能
+
 if st.button("作品を保存"):
     if canvas_result.image_data is not None:
         # 画像を保存
-        filename = f"drawing_{author_name}_{len(os.listdir())}.png"  # 作者名をファイル名に含める
+
+        filename = f"{author_name}_{len(os.listdir(gal_data))}.png"  # 作者名をファイル名に含める
+        save_path = f"gal_data/{filename}"
+        os.makedirs(save_path, exist_ok=True)
+
         image = Image.fromarray(canvas_result.image_data)
-        image.save(filename)
+        image.save(save_path)
         st.success(f"作品が保存されました！ ({author_name})")
         
         # 保存した作品の情報を表示
@@ -61,17 +66,16 @@ if st.button("作品を保存"):
 
 # ギャラリー表示
 st.write("保存された作品:")
-if 'gallery' in st.session_state:
-    for filename in st.session_state.gallery:
+filenames = os.listdir("gal_data")
+if filenames:
+    for fname in filenames:
         col1, col2 = st.columns([4, 1])  # 2つのカラムを作成
         with col1:
-            st.image(filename, caption=f"作品: {filename}", use_container_width=True)  # ファイル名を表示
+            st.image(gal_data/fname, caption=f"作品: {fname}", use_container_width=True)  # ファイル名表示
         with col2:
-            if st.button("削除", key=filename):  # 各作品に削除ボタンを追加
-                os.remove(filename)  # ファイルを削除
-                st.session_state.gallery.remove(filename)  # ギャラリーから削除
-                st.success(f"{filename}が削除されました。")
-
+            if st.button("削除", key=fname):  # 各作品に削除ボタンを追加
+                os.remove(gal_data/fname)  # ファイルを削除
+                st.success(f"{fname}が削除されました。")
 
 
 # 拡張案: 作品を他のユーザーと共有できる掲示板機能
