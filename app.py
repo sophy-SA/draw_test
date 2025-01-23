@@ -46,14 +46,14 @@ canvas_result = st_canvas(
 author_name = st.text_input("作者名を入力してください:")
 
 # 作品を保存する機能
-
 if st.button("作品を保存"):
     if canvas_result.image_data is not None:
-        # 画像を保存
+        # gal_dataディレクトリのパスを正しく設定
+        gal_data = "gal_data"
+        os.makedirs(gal_data, exist_ok=True)  # ディレクトリが存在しない場合は作成
 
-        filename = f"{author_name}_{len(os.listdir())}.png"  # 作者名をファイル名に含める
-        save_path = f"{filename}"
-        os.makedirs(save_path, exist_ok=True)
+        filename = f"{author_name}_{len(os.listdir(gal_data))}.png"
+        save_path = os.path.join(gal_data, filename)  # パスを正しく結合
 
         image = Image.fromarray(canvas_result.image_data)
         image.save(save_path)
@@ -66,15 +66,17 @@ if st.button("作品を保存"):
 
 # ギャラリー表示
 st.write("保存された作品:")
-filenames = os.listdir()
+gal_data = "gal_data"  # ディレクトリパスを設定
+filenames = os.listdir(gal_data)
 if filenames:
     for fname in filenames:
-        col1, col2 = st.columns([4, 1])  # 2つのカラムを作成
+        col1, col2 = st.columns([4, 1])
         with col1:
-            st.image(fname, caption=f"作品: {fname}", use_container_width=True)  # ファイル名表示
+            image_path = os.path.join(gal_data, fname)  # 画像パスを正しく結合
+            st.image(image_path, caption=f"作品: {fname}", use_column_width=True)
         with col2:
-            if st.button("削除", key=fname):  # 各作品に削除ボタンを追加
-                os.remove(fname)  # ファイルを削除
+            if st.button("削除", key=fname):
+                os.remove(os.path.join(gal_data, fname))  # 削除時のパスも正しく結合
                 st.success(f"{fname}が削除されました。")
 
 
