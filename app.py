@@ -73,7 +73,7 @@ if filenames:
         col1, col2 = st.columns([4, 1])
         with col1:
             image_path = os.path.join(gal_data, fname)  # 画像パスを正しく結合
-            st.image(image_path, caption=f"作品: {fname}", use_containr_width=True)
+            st.image(image_path, caption=f"作品: {fname}", use_container_width=True)
         with col2:
             if st.button("削除", key=fname):
                 os.remove(os.path.join(gal_data, fname))  # 削除時のパスも正しく結合
