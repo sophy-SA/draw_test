@@ -51,8 +51,8 @@ if st.button("作品を保存"):
     if canvas_result.image_data is not None:
         # 画像を保存
 
-        filename = f"{author_name}_{len(os.listdir(gal_data))}.png"  # 作者名をファイル名に含める
-        save_path = f"gal_data/{filename}"
+        filename = f"{author_name}_{len(os.listdir())}.png"  # 作者名をファイル名に含める
+        save_path = f"{filename}"
         os.makedirs(save_path, exist_ok=True)
 
         image = Image.fromarray(canvas_result.image_data)
@@ -66,15 +66,15 @@ if st.button("作品を保存"):
 
 # ギャラリー表示
 st.write("保存された作品:")
-filenames = os.listdir("gal_data")
+filenames = os.listdir()
 if filenames:
     for fname in filenames:
         col1, col2 = st.columns([4, 1])  # 2つのカラムを作成
         with col1:
-            st.image(gal_data/fname, caption=f"作品: {fname}", use_container_width=True)  # ファイル名表示
+            st.image(fname, caption=f"作品: {fname}", use_container_width=True)  # ファイル名表示
         with col2:
             if st.button("削除", key=fname):  # 各作品に削除ボタンを追加
-                os.remove(gal_data/fname)  # ファイルを削除
+                os.remove(fname)  # ファイルを削除
                 st.success(f"{fname}が削除されました。")
 
 
