@@ -8,7 +8,7 @@ from streamlit_drawable_canvas import st_canvas
 topics = ["猫", "ファンタジーの生き物", "未来の乗り物", "風景", "絶対勝てないボスキャラ","理想の家","好きな食べ物","宇宙","かわいいロボット","犬","つねちゃんの似顔絵","お伽話から1シーン","自由にどうぞ！(当たり)","さむらい"]
 
 # アプリのタイトル
-st.title("お絵かきチャレンジ2")
+st.title("お絵かきアプリ")
 
 # ランダムお題生成
 if st.button("お題を生成"):
@@ -29,10 +29,10 @@ color_options = {
     "紫": "purple",
     "オレンジ": "orange"
 }
-stroke_color = st.selectbox("線の色は変更できます:", list(color_options.keys()))
+stroke_color = st.selectbox("線色を変更:", list(color_options.keys()))
 
 # お絵かき用キャンバス
-st.write("キャンバスに絵を描いてください。")
+#st.write("キャンバスに絵を描いてください。")
 
 # 画面幅の80%をキャンバスの幅として設定
 # canvas_width = int(st.get_viewport_width() * 0.8)
@@ -41,9 +41,9 @@ canvas_result = st_canvas(
     fill_color="rgba(255, 255, 255, 1)",  # 背景色を完全な白に設定
     stroke_color=color_options[stroke_color],
     stroke_width=3,
-    height=360,  # 正方形にするため、幅と同じ値を設定
-    width=360,
-    background_color="white",  # 追加の背景色設定
+    height=320,  # 正方形にするため、幅と同じ値を設定
+    width=320,
+    background_color="gray",  # 追加の背景色設定
     key="canvas"
 )
 
