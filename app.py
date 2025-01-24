@@ -41,9 +41,9 @@ canvas_result = st_canvas(
     fill_color="rgba(255, 255, 255, 1)",  # 背景色を完全な白に設定
     stroke_color=color_options[stroke_color],
     stroke_width=3,
-    height=320,  # 正方形にするため、幅と同じ値を設定
-    width=320,
-    background_color="gray",  # 追加の背景色設定
+    height=360,  # 正方形にするため、幅と同じ値を設定
+    width=360,
+    background_color="white",  # 追加の背景色設定
     key="canvas"
 )
 
