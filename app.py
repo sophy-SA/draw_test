@@ -33,12 +33,17 @@ stroke_color = st.selectbox("線の色は変更できます:", list(color_option
 
 # お絵かき用キャンバス
 st.write("キャンバスに絵を描いてください。")
+
+# 画面幅の80%をキャンバスの幅として設定
+# canvas_width = int(st.get_viewport_width() * 0.8)
+
 canvas_result = st_canvas(
-    fill_color="white",  # 背景色
-    stroke_color=color_options[stroke_color],  # 描画色を英語に変換
+    fill_color="rgba(255, 255, 255, 1)",  # 背景色を完全な白に設定
+    stroke_color=color_options[stroke_color],
     stroke_width=3,
-    height=400,
-    width=400,
+    height=360,  # 正方形にするため、幅と同じ値を設定
+    width=360,
+    background_color="white",  # 追加の背景色設定
     key="canvas"
 )
 
