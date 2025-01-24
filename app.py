@@ -40,10 +40,10 @@ stroke_color = st.selectbox(
 
 # 明度の調整用スライダー
 brightness = st.slider(
-    "明るさを調整",
-    min_value=0,
-    max_value=100,
-    value=50,
+    "明るさ調整(暗い ← → 明るい)",
+    min_value=20,
+    max_value=80,
+    value=50,  # デフォルト値は中間の50%のまま
     step=1
 )
 
