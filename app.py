@@ -39,17 +39,20 @@ stroke_color = st.selectbox(
 )
 
 # 明度の調整用スライダー
-brightness = st.slider(
+if 'brightness' not in st.session_state:
+    st.session_state.brightness = 50  # 初期値を50に設定
+
+st.session_state.brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
     min_value=20,
     max_value=80,
-    value=50,  # デフォルト値は中間の50%のまま
+    value=st.session_state.brightness,  # session_stateから値を取得
     step=1
 )
 
 # 明度を50に戻すボタン
 if st.button("明度を50に戻す"):
-    brightness = 50  # スライダーの値を50に設定
+    st.session_state.brightness = 50  # スライダーの値を50に設定
     st.experimental_rerun()  # アプリを再実行してスライダーの値を更新
 
 # 選択された色のHSLを調整
@@ -57,7 +60,7 @@ base_color = color_options[stroke_color]
 # カラーコードをRGBに変換し、HSLに変換して明度を調整
 rgb = ImageColor.getrgb(base_color)
 h, l, s = colorsys.rgb_to_hls(rgb[0]/255, rgb[1]/255, rgb[2]/255)
-adjusted_rgb = colorsys.hls_to_rgb(h, brightness/100, s)
+adjusted_rgb = colorsys.hls_to_rgb(h, st.session_state.brightness/100, s)
 adjusted_color = f"rgb({int(adjusted_rgb[0]*255)}, {int(adjusted_rgb[1]*255)}, {int(adjusted_rgb[2]*255)})"
 
 # お絵かき用キャンバス
