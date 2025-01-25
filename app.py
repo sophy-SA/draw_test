@@ -33,20 +33,18 @@ color_options = {
 }
 
 # 色の選択
-def reset_brightness():
-    st.session_state.brightness = 50  # 明度を50にリセット
-
 stroke_color = st.selectbox(
     "線色を選択",
     list(color_options.keys()),
-    on_change=reset_brightness  # 明度を50にリセットする関数を呼び出す
+    index=list(color_options.keys()).index(st.session_state.get("stroke_color", "黒")),  # 初期値を設定
+    on_change=lambda: st.session_state.update({"brightness": 50, "stroke_color": stroke_color})  # 明度を50にリセット
 )
 
 # 明度の調整用スライダー
 brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
-    min_value=20,
-    max_value=80,
+    min_value=10,
+    max_value=90,
     value=st.session_state.get("brightness", 50),  # セッションから明度を取得
     step=1
 )
