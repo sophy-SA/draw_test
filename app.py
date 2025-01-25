@@ -40,9 +40,8 @@ stroke_color = st.selectbox(
 
 # 明度を50に戻すボタン
 if st.button("明度を50に戻す"):
-    brightness = 50  # 明度を50に設定
-    st.session_state.brightness = brightness  # セッションステートに保存
-    st.experimental_rerun()  # アプリを再実行してスライダーの表示を更新
+    st.session_state.brightness = 50  # セッションステートに明度を保存
+    # スライダーの値を直接更新するために、再実行は行わない
 
 # 明度の調整用スライダー
 brightness = st.slider(
