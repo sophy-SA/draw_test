@@ -42,6 +42,7 @@ stroke_color = st.selectbox(
 if 'brightness' not in st.session_state:
     st.session_state.brightness = 50  # 初期値を50に設定
 
+# スライダーの表示
 st.session_state.brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
     min_value=20,
@@ -53,7 +54,7 @@ st.session_state.brightness = st.slider(
 # 明度を50に戻すボタン
 if st.button("明度を50に戻す"):
     st.session_state.brightness = 50  # スライダーの値を50に設定
-    st.experimental_rerun()  # アプリを再実行してスライダーの値を更新
+    # スライダーの値を更新するために再実行する必要はない
 
 # 選択された色のHSLを調整
 base_color = color_options[stroke_color]
