@@ -38,12 +38,8 @@ stroke_color = st.selectbox(
     list(color_options.keys())
 )
 
-#未定義のデフォルト値を設定
 if 'brightness' not in st.session_state:
     st.session_state.brightness = 50
-
-if color_options[stroke_color] == "black":
-    st.session_state.brightness = 10
 
 # 明度を50に戻すボタン
 if st.button("明度を50に戻す"):
