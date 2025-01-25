@@ -46,7 +46,7 @@ brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
     min_value=10,
     max_value=90,
-    value=st.session_state.brightness  # セッションステートから値を取得
+    value=st.session_state.brightness,  # セッションステートから値を取得
     step=5
 )
 
