@@ -43,7 +43,7 @@ if 'brightness' not in st.session_state:
     st.session_state.brightness = 50  # 初期値を50に設定
 
 # スライダーの表示
-st.session_state.brightness = st.slider(
+brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
     min_value=20,
     max_value=80,
@@ -53,6 +53,7 @@ st.session_state.brightness = st.slider(
 
 # 明度を50に戻すボタン
 if st.button("明度を50に戻す"):
+    st.session_state.brightness = 50  # スライダーの値を50に設定
     st.session_state.brightness = 50  # スライダーの値を50に設定
     st.experimental_rerun()  # アプリを再実行してスライダーの値を更新
 
