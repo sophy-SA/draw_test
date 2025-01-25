@@ -35,34 +35,25 @@ color_options = {
 # 色の選択
 stroke_color = st.selectbox(
     "線色を選択",
-    list(color_options.keys())
+    list(color_options.keys()),
+    on_change=lambda: st.session_state.update({"brightness": 50})  # 明度を50にリセット
 )
 
 # 明度の調整用スライダー
-if 'brightness' not in st.session_state:
-    st.session_state.brightness = 50  # 初期値を50に設定
-
-# スライダーの表示
 brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
     min_value=20,
     max_value=80,
-    value=st.session_state.brightness,  # session_stateから値を取得
+    value=st.session_state.get("brightness", 50),  # セッションから明度を取得
     step=1
 )
-
-# 明度を50に戻すボタン
-if st.button("明度を50に戻す"):
-    st.session_state.brightness = 50  # スライダーの値を50に設定
-    st.session_state.brightness = 50  # スライダーの値を50に設定
-    st.experimental_rerun()  # アプリを再実行してスライダーの値を更新
 
 # 選択された色のHSLを調整
 base_color = color_options[stroke_color]
 # カラーコードをRGBに変換し、HSLに変換して明度を調整
 rgb = ImageColor.getrgb(base_color)
 h, l, s = colorsys.rgb_to_hls(rgb[0]/255, rgb[1]/255, rgb[2]/255)
-adjusted_rgb = colorsys.hls_to_rgb(h, st.session_state.brightness/100, s)
+adjusted_rgb = colorsys.hls_to_rgb(h, brightness/100, s)
 adjusted_color = f"rgb({int(adjusted_rgb[0]*255)}, {int(adjusted_rgb[1]*255)}, {int(adjusted_rgb[2]*255)})"
 
 # お絵かき用キャンバス
@@ -105,19 +96,18 @@ if st.button("作品を保存"):
 
 # ギャラリー表示
 st.write("保存された作品:")
-if 'gallery' in st.session_state:
-    for filename in st.session_state.gallery:
-        col1, col2 = st.columns([4, 2])  # 2つのカラムを作成
+gal_data = "gal_data"  # ディレクトリパスを設定
+filenames = os.listdir(gal_data)
+if filenames:
+    for fname in filenames:
+        col1, col2 = st.columns([4, 1])
         with col1:
-            st.image(filename, caption=f"作品: {filename}", use_container_width=True)  # ファイル名を表示
+            image_path = os.path.join(gal_data, fname)  # 画像パスを正しく結合
+            st.image(image_path, caption=f"作品: {fname}", use_container_width=True)
         with col2:
-            if st.button("削除", key=f"delete_{filename}"):  # 各作品に削除ボタンを追加
-                os.remove(filename)  # ファイルを削除
-                st.session_state.gallery.remove(filename)  # ギャラリーから削除
-                st.success(f"{filename}が削除されました。")
-            if st.button("ダウンロード", key=f"download_{filename}"):  # ダウンロードボタンを追加
-                with open(filename, "rb") as f:
-                    st.download_button("ダウンロード", f, file_name=filename, mime="image/png")  # ダウンロードボタン
+            if st.button("削除", key=fname):
+                os.remove(os.path.join(gal_data, fname))  # 削除時のパスも正しく結合
+                st.success(f"{fname}が削除されました。")
 
 
 # 拡張案: 作品を他のユーザーと共有できる掲示板機能
