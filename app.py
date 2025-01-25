@@ -47,6 +47,11 @@ brightness = st.slider(
     step=1
 )
 
+# 明度を50に戻すボタン
+if st.button("明度を50に戻す"):
+    brightness = 50  # スライダーの値を50に設定
+    st.experimental_rerun()  # アプリを再実行してスライダーの値を更新
+
 # 選択された色のHSLを調整
 base_color = color_options[stroke_color]
 # カラーコードをRGBに変換し、HSLに変換して明度を調整
@@ -95,18 +100,19 @@ if st.button("作品を保存"):
 
 # ギャラリー表示
 st.write("保存された作品:")
-gal_data = "gal_data"  # ディレクトリパスを設定
-filenames = os.listdir(gal_data)
-if filenames:
-    for fname in filenames:
-        col1, col2 = st.columns([4, 1])
+if 'gallery' in st.session_state:
+    for filename in st.session_state.gallery:
+        col1, col2 = st.columns([4, 2])  # 2つのカラムを作成
         with col1:
-            image_path = os.path.join(gal_data, fname)  # 画像パスを正しく結合
-            st.image(image_path, caption=f"作品: {fname}", use_container_width=True)
+            st.image(filename, caption=f"作品: {filename}", use_container_width=True)  # ファイル名を表示
         with col2:
-            if st.button("削除", key=fname):
-                os.remove(os.path.join(gal_data, fname))  # 削除時のパスも正しく結合
-                st.success(f"{fname}が削除されました。")
+            if st.button("削除", key=f"delete_{filename}"):  # 各作品に削除ボタンを追加
+                os.remove(filename)  # ファイルを削除
+                st.session_state.gallery.remove(filename)  # ギャラリーから削除
+                st.success(f"{filename}が削除されました。")
+            if st.button("ダウンロード", key=f"download_{filename}"):  # ダウンロードボタンを追加
+                with open(filename, "rb") as f:
+                    st.download_button("ダウンロード", f, file_name=filename, mime="image/png")  # ダウンロードボタン
 
 
 # 拡張案: 作品を他のユーザーと共有できる掲示板機能
