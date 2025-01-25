@@ -43,10 +43,11 @@ stroke_color = st.selectbox(
 # 明度の調整用スライダー
 brightness = st.slider(
     "明るさ調整(暗い ← → 明るい)",
-    min_value=10,
-    max_value=90,
+    min_value=20,
+    max_value=80,
     value=st.session_state.get("brightness", 50),  # セッションから明度を取得
-    step=1
+    step=1,
+    key="brightness_slider"  # スライダーのキーを指定
 )
 
 # 選択された色のHSLを調整
